@@ -1,0 +1,35 @@
+{
+  "entities": {
+    "DocumentRecord": {
+      "title": "Document Record",
+      "description": "A record of an uploaded official document.",
+      "type": "object",
+      "properties": {
+        "letterNo": { "type": "string", "description": "The official letter number" },
+        "branch": { "type": "string", "description": "The related branch" },
+        "receiptDate": { "type": "string", "format": "date", "description": "Date of receipt" },
+        "description": { "type": "string", "description": "Brief description" },
+        "fileName": { "type": "string", "description": "Original file name" },
+        "fileUrl": { "type": "string", "description": "Google Drive link" },
+        "uploadDate": { "type": "string", "format": "date-time", "description": "Timestamp of upload" },
+        "userId": { "type": "string", "description": "ID of the user who uploaded" }
+      },
+      "required": [
+        "letterNo",
+        "branch",
+        "receiptDate",
+        "description",
+        "fileName",
+        "fileUrl",
+        "uploadDate",
+        "userId"
+      ]
+    }
+  },
+  "firestore": {
+    "/documents/{documentId}": {
+      "schema": { "$ref": "#/entities/DocumentRecord" },
+      "description": "Stores the official correspondence documents"
+    }
+  }
+}

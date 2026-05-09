@@ -1,0 +1,38 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+    function isSignedIn() { return request.auth != null; }
+
+    function isValidDocumentRecord(data) {
+      return data.keys().hasAll(['letterNo', 'branch', 'receiptDate', 'description', 'fileName', 'fileUrl', 'uploadDate', 'userId']) &&
+             (data.keys().size() == 8 || (data.keys().hasAll(['driveFileId']) && data.keys().size() == 9)) &&
+             data.letterNo is string && data.letterNo.size() > 0 && data.letterNo.size() <= 200 &&
+             data.branch is string && data.branch.size() > 0 && data.branch.size() <= 200 &&
+             data.receiptDate is string && data.receiptDate.size() > 0 && data.receiptDate.size() <= 50 &&
+             data.description is string && data.description.size() <= 5000 &&
+             data.fileName is string && data.fileName.size() > 0 && data.fileName.size() <= 500 &&
+             data.fileUrl is string && data.fileUrl.size() > 0 && data.fileUrl.size() <= 1000 &&
+             data.uploadDate == request.time &&
+             data.userId == request.auth.uid &&
+             (!('driveFileId' in data) || (data.driveFileId is string && data.driveFileId.size() <= 200));
+    }
+
+    match /documents/{documentId} {
+      // allow all staff (any authenticated user) to read documents
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && isValidId(documentId) && isValidDocumentRecord(incoming());
+      allow update: if false;
+      allow delete: if isSignedIn() && existing().userId == request.auth.uid;
+    }
+  }
+}
