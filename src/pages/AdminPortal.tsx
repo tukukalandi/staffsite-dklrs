@@ -7,10 +7,20 @@ import { handleFirestoreError, OperationType } from '../lib/firestore-error';
 import { uploadToGoogleDrive } from '../lib/drive';
 
 const BRANCH_LIST = [
-  'Main Branch',
-  'City Center Branch',
-  'North Zone Branch',
-  'South Zone Branch'
+  'Speed Post',
+  'Parcel',
+  'International Mail',
+  'CCS',
+  'Savings',
+  'PLI',
+  'Philately',
+  'Building',
+  'Staff',
+  'Accounts',
+  'Stock',
+  'Technology',
+  'Loss/Fraud',
+  'Other'
 ];
 
 export function AdminPortal() {
