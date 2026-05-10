@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
-import { LayoutDashboard, FileText, Building2, Users, UserSquare2, ShieldAlert, FolderOpen, LogOut } from 'lucide-react';
+import { LayoutDashboard, FileText, Building2, Users, UserSquare2, ShieldAlert, FolderOpen, LogOut, Menu, X } from 'lucide-react';
 import { onAuthStateChanged, signOut, User } from 'firebase/auth';
 import { auth } from '../lib/firebase';
 import { cn } from '../lib/utils';
@@ -17,6 +17,11 @@ const navigation = [
 export function Layout() {
   const location = useLocation();
   const [user, setUser] = useState<User | null>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [location.pathname]);
 
   useEffect(() => {
     return onAuthStateChanged(auth, setUser);
@@ -28,11 +33,30 @@ export function Layout() {
 
   return (
     <div className="flex h-screen bg-neutral-50 overflow-hidden font-sans">
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 z-40 bg-black/50 lg:hidden"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
-      <div className="w-64 bg-white border-r border-neutral-200 flex flex-col shadow-sm">
-        <div className="h-16 flex items-center px-6 border-b border-neutral-200">
-          <LayoutDashboard className="h-6 w-6 text-red-600 mr-3" />
-          <h1 className="text-lg font-bold text-neutral-900 leading-tight">Dhenkanal RS SO</h1>
+      <div className={cn(
+        "fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-neutral-200 flex flex-col shadow-lg lg:static lg:shadow-sm transform transition-transform duration-200 ease-in-out lg:translate-x-0",
+        isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+      )}>
+        <div className="h-16 flex items-center justify-between px-6 border-b border-neutral-200">
+          <div className="flex items-center">
+            <LayoutDashboard className="h-6 w-6 text-red-600 mr-3" />
+            <h1 className="text-lg font-bold text-neutral-900 leading-tight">Dhenkanal RS SO</h1>
+          </div>
+          <button 
+            className="lg:hidden text-neutral-500 hover:text-neutral-700"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            <X className="h-5 w-5" />
+          </button>
         </div>
         
         <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
@@ -65,15 +89,23 @@ export function Layout() {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
-        <header className="h-16 flex items-center justify-between px-8 bg-white border-b border-neutral-200 shadow-sm">
-          <h2 className="text-xl font-semibold text-neutral-800">
-            {navigation.find(n => n.href === location.pathname)?.name || 'Portal'}
-          </h2>
-          <div className="flex items-center gap-4">
+        <header className="h-16 flex items-center justify-between px-4 lg:px-8 bg-white border-b border-neutral-200 shadow-sm shrink-0">
+          <div className="flex items-center">
+            <button 
+              className="lg:hidden mr-4 text-neutral-500 hover:text-neutral-700"
+              onClick={() => setIsMobileMenuOpen(true)}
+            >
+              <Menu className="h-6 w-6" />
+            </button>
+            <h2 className="text-lg lg:text-xl font-semibold text-neutral-800">
+              {navigation.find(n => n.href === location.pathname)?.name || 'Portal'}
+            </h2>
+          </div>
+          <div className="flex items-center gap-2 lg:gap-4">
             {user ? (
               <>
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-neutral-600">{user.displayName || user.email}</span>
+                  <span className="hidden sm:inline text-sm font-medium text-neutral-600">{user.displayName || user.email}</span>
                   {user.photoURL ? (
                     <img src={user.photoURL} alt="Avatar" className="h-8 w-8 rounded-full border border-neutral-200" />
                   ) : (
@@ -96,7 +128,7 @@ export function Layout() {
           </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto p-8">
+        <main className="flex-1 overflow-y-auto p-4 lg:p-8">
           <Outlet />
         </main>
       </div>

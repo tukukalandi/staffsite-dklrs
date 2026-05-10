@@ -213,7 +213,7 @@ export function AdminPortal() {
           </div>
         )}
 
-        <div className="grid grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <div className="space-y-1.5">
             <label className="text-sm font-medium text-neutral-700">Letter No.</label>
             <input 
@@ -304,7 +304,7 @@ export function AdminPortal() {
           <h3 className="text-lg font-semibold text-neutral-900 mb-4">Your Uploaded Documents</h3>
           <div className="space-y-3">
             {userDocs.map(doc => (
-              <div key={doc.id} className="flex items-center justify-between p-4 border border-neutral-200 rounded-lg bg-neutral-50">
+              <div key={doc.id} className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 border border-neutral-200 rounded-lg bg-neutral-50">
                 <div className="flex items-start space-x-3">
                   <div className="h-10 w-10 bg-red-100 text-red-600 rounded-md flex items-center justify-center flex-shrink-0">
                     <FileText className="h-5 w-5" />
@@ -318,7 +318,7 @@ export function AdminPortal() {
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center space-x-2 flex-shrink-0 ml-4">
+                <div className="flex items-center space-x-2 flex-shrink-0 sm:ml-4 self-end sm:self-auto">
                   <a 
                     href={doc.fileUrl} 
                     target="_blank" 
