@@ -23,6 +23,8 @@ const BRANCH_LIST = [
   'Other'
 ];
 
+import { StaffPhotosAdmin } from '../components/StaffPhotosAdmin';
+
 export function AdminPortal() {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [driveToken, setDriveToken] = useState<string | null>(null);
@@ -175,31 +177,34 @@ export function AdminPortal() {
     );
   }
 
-  if (!driveToken) {
-    return (
-      <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-sm border border-neutral-200 overflow-hidden text-center p-12">
-        <UploadCloud className="h-12 w-12 text-red-600 mx-auto mb-4" />
-        <h3 className="text-xl font-semibold text-neutral-900 mb-2">Connect Google Drive</h3>
-        <p className="text-neutral-500 mb-6">Please authorize access to Google Drive so documents can be uploaded directly.</p>
-        <button
-          onClick={handleLogin}
-          className="px-6 py-2 bg-red-600 text-white font-medium rounded-md shadow-sm hover:bg-red-700 transition"
-        >
-          Authorize Google Drive
-        </button>
-        {submitError && <p className="text-red-500 mt-4 text-sm">{submitError}</p>}
-      </div>
-    );
-  }
-
   return (
-    <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-sm border border-neutral-200 overflow-hidden">
-      <div className="p-6 border-b border-neutral-200 bg-neutral-50">
-        <h3 className="text-lg font-semibold text-neutral-900">Upload Official Document</h3>
-        <p className="text-sm text-neutral-500 mt-1">Submit new letters or files to the correspondence system.</p>
-      </div>
+    <div className="max-w-2xl mx-auto space-y-8">
+      
+      {/* Staff Photos Management */}
+      <StaffPhotosAdmin />
 
-      <form onSubmit={handleSubmit} className="p-6 space-y-5">
+      {/* Document Upload Management */}
+      {!driveToken ? (
+        <div className="bg-white rounded-xl shadow-sm border border-neutral-200 overflow-hidden text-center p-12">
+          <UploadCloud className="h-12 w-12 text-red-600 mx-auto mb-4" />
+          <h3 className="text-xl font-semibold text-neutral-900 mb-2">Connect Google Drive</h3>
+          <p className="text-neutral-500 mb-6">Please authorize access to Google Drive so documents can be uploaded directly.</p>
+          <button
+            onClick={handleLogin}
+            className="px-6 py-2 bg-red-600 text-white font-medium rounded-md shadow-sm hover:bg-red-700 transition"
+          >
+            Authorize Google Drive
+          </button>
+          {submitError && <p className="text-red-500 mt-4 text-sm">{submitError}</p>}
+        </div>
+      ) : (
+        <div className="bg-white rounded-xl shadow-sm border border-neutral-200 overflow-hidden">
+          <div className="p-6 border-b border-neutral-200 bg-neutral-50">
+            <h3 className="text-lg font-semibold text-neutral-900">Upload Official Document</h3>
+            <p className="text-sm text-neutral-500 mt-1">Submit new letters or files to the correspondence system.</p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="p-6 space-y-5">
         {success && (
           <div className="bg-green-50 text-green-700 p-4 rounded-md flex items-center mb-6 border border-green-200">
             <CheckCircle2 className="h-5 w-5 mr-3 flex-shrink-0" />
@@ -338,6 +343,8 @@ export function AdminPortal() {
               </div>
             ))}
           </div>
+        </div>
+      )}
         </div>
       )}
     </div>

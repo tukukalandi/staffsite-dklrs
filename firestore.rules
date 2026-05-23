@@ -27,12 +27,24 @@ service cloud.firestore {
              (!('driveFileId' in data) || (data.driveFileId is string && data.driveFileId.size() <= 200));
     }
 
+    function isValidStaffPhoto(data) {
+      return data.keys().hasAll(['photoData', 'updatedAt']) &&
+             data.keys().size() == 2 &&
+             data.photoData is string && data.photoData.size() > 0 &&
+             data.updatedAt is string && data.updatedAt.size() > 0;
+    }
+
     match /documents/{documentId} {
       // allow all staff (any authenticated user) to read documents
       allow read: if isSignedIn();
       allow create: if isSignedIn() && isValidId(documentId) && isValidDocumentRecord(incoming());
       allow update: if false;
       allow delete: if isSignedIn() && existing().userId == request.auth.uid;
+    }
+
+    match /staffPhotos/{staffId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn() && isValidStaffPhoto(incoming());
     }
   }
 }

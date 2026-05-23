@@ -24,12 +24,26 @@
         "uploadDate",
         "userId"
       ]
+    },
+    "StaffPhoto": {
+      "title": "Staff Photo",
+      "description": "Base64 encoded string of staff profile photo.",
+      "type": "object",
+      "properties": {
+        "photoData": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["photoData", "updatedAt"]
     }
   },
   "firestore": {
     "/documents/{documentId}": {
       "schema": { "$ref": "#/entities/DocumentRecord" },
       "description": "Stores the official correspondence documents"
+    },
+    "/staffPhotos/{staffId}": {
+      "schema": { "$ref": "#/entities/StaffPhoto" },
+      "description": "Stores the staff photos."
     }
   }
 }
