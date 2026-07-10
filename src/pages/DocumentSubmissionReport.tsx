@@ -43,10 +43,19 @@ export function DocumentSubmissionReport() {
     }
     
     setLoading(true);
-    const q = query(collection(db, 'documentSubmissionReport'), orderBy('createdAt', 'desc'));
+    const q = query(collection(db, 'documentSubmissionReport'));
     const unsub = onSnapshot(q, (snapshot) => {
       const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as DocumentSubmission));
+      // Sort client-side by createdAt descending
+      data.sort((a, b) => {
+        const timeA = a.createdAt?.toMillis ? a.createdAt.toMillis() : 0;
+        const timeB = b.createdAt?.toMillis ? b.createdAt.toMillis() : 0;
+        return timeB - timeA;
+      });
       setRecords(data);
+      setLoading(false);
+    }, (error) => {
+      console.error("Error fetching records:", error);
       setLoading(false);
     });
     
@@ -96,12 +105,12 @@ export function DocumentSubmissionReport() {
   const filteredRecords = useMemo(() => {
     return records.filter(r => {
       const matchesSearch = 
-        r.accountNo.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        r.customerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        r.documentType.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (r.accountNo || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (r.customerName || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (r.documentType || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
         (r.otherType || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
-        r.submittedTo.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        r.status.toLowerCase().includes(searchQuery.toLowerCase());
+        (r.submittedTo || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (r.status || '').toLowerCase().includes(searchQuery.toLowerCase());
         
       const matchesStatus = statusFilter ? r.status === statusFilter : true;
       const matchesDocType = docTypeFilter ? r.documentType === docTypeFilter : true;

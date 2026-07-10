@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, addDoc, doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, User } from 'firebase/auth';
 import { db, auth, googleProvider } from '../lib/firebase';
 import { ShieldAlert, CheckCircle2 } from 'lucide-react';
@@ -106,7 +106,8 @@ export function DocumentSubmissionForm() {
         updatedAt: serverTimestamp(),
       };
 
-      await addDoc(collection(db, 'documentSubmissionReport'), payload);
+      const newDocRef = doc(collection(db, 'documentSubmissionReport'));
+      await setDoc(newDocRef, payload);
       
       setSuccess(true);
       setFormData({
@@ -121,7 +122,7 @@ export function DocumentSubmissionForm() {
         remarks: '',
         status: 'Pending',
       });
-      setTimeout(() => setSuccess(false), 3000);
+      setTimeout(() => setSuccess(false), 5000);
     } catch (err: any) {
       console.error(err);
       setError(err.message || 'Failed to save record.');
