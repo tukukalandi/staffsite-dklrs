@@ -107,7 +107,13 @@ export function DocumentSubmissionForm() {
       };
 
       const newDocRef = doc(collection(db, 'documentSubmissionReport'));
-      await setDoc(newDocRef, payload);
+      
+      const savePromise = setDoc(newDocRef, payload);
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Request timed out. Please check your internet connection or adblocker.')), 10000)
+      );
+      
+      await Promise.race([savePromise, timeoutPromise]);
       
       setSuccess(true);
       setFormData({

@@ -13,6 +13,7 @@ export function DocumentSubmissionReport() {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [records, setRecords] = useState<DocumentSubmission[]>([]);
   const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState<string | null>(null);
   
   // States for search and filter
   const [searchQuery, setSearchQuery] = useState('');
@@ -43,6 +44,7 @@ export function DocumentSubmissionReport() {
     }
     
     setLoading(true);
+    setFetchError(null);
     const q = query(collection(db, 'documentSubmissionReport'));
     const unsub = onSnapshot(q, (snapshot) => {
       const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as DocumentSubmission));
@@ -54,8 +56,10 @@ export function DocumentSubmissionReport() {
       });
       setRecords(data);
       setLoading(false);
+      setFetchError(null);
     }, (error) => {
       console.error("Error fetching records:", error);
+      setFetchError(error.message || 'Failed to fetch records. Please check permissions.');
       setLoading(false);
     });
     
@@ -282,6 +286,8 @@ export function DocumentSubmissionReport() {
             <tbody className="divide-y divide-neutral-100">
               {loading ? (
                 <tr><td colSpan={8} className="px-6 py-8 text-center text-neutral-500">Loading records...</td></tr>
+              ) : fetchError ? (
+                <tr><td colSpan={8} className="px-6 py-8 text-center text-red-500 font-bold">{fetchError}</td></tr>
               ) : paginatedRecords.length === 0 ? (
                 <tr><td colSpan={8} className="px-6 py-8 text-center text-neutral-500">No records found.</td></tr>
               ) : (
