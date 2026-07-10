@@ -101,7 +101,6 @@ export function DocumentSubmissionReport() {
         r.documentType.toLowerCase().includes(searchQuery.toLowerCase()) ||
         (r.otherType || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
         r.submittedTo.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (r.otherOffice || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
         r.status.toLowerCase().includes(searchQuery.toLowerCase());
         
       const matchesStatus = statusFilter ? r.status === statusFilter : true;
@@ -138,7 +137,7 @@ export function DocumentSubmissionReport() {
       Document_Type: r.documentType === 'Others' ? r.otherType : r.documentType,
       Entry_Date: r.entryDate,
       Submission_Date: r.submissionDate,
-      Submitted_To: r.submittedTo === 'Other' ? r.otherOffice : r.submittedTo,
+      Submitted_To: r.submittedTo,
       Status: r.status,
       Submitted_By: r.submittedBy
     })));
@@ -159,7 +158,7 @@ export function DocumentSubmissionReport() {
       'Document Type': r.documentType === 'Others' ? r.otherType : r.documentType,
       'Entry Date': r.entryDate,
       'Submission Date': r.submissionDate,
-      'Submitted To': r.submittedTo === 'Other' ? r.otherOffice : r.submittedTo,
+      'Submitted To': r.submittedTo,
       'Status': r.status,
       'Submitted By': r.submittedBy,
       'Remarks': r.remarks
@@ -181,7 +180,7 @@ export function DocumentSubmissionReport() {
         r.customerName,
         r.documentType === 'Others' ? (r.otherType || '') : r.documentType,
         r.submissionDate,
-        r.submittedTo === 'Other' ? (r.otherOffice || '') : r.submittedTo,
+        r.submittedTo,
         r.status
       ]),
     });
@@ -252,7 +251,6 @@ export function DocumentSubmissionReport() {
           <option value="">All Offices</option>
           <option value="Dhenkanal HO">Dhenkanal HO</option>
           <option value="Division Office">Division Office</option>
-          <option value="Other">Other</option>
         </select>
       </div>
 
@@ -292,7 +290,7 @@ export function DocumentSubmissionReport() {
                     </td>
                     <td className="px-6 py-4 text-neutral-500">{r.entryDate}</td>
                     <td className="px-6 py-4">
-                      {r.submittedTo === 'Other' ? r.otherOffice : r.submittedTo}
+                      {r.submittedTo}
                     </td>
                     <td className="px-6 py-4">
                       <span className={`px-3 py-1 rounded-full text-xs font-bold border ${getStatusColor(r.status)}`}>
@@ -423,7 +421,7 @@ export function DocumentSubmissionReport() {
                 </div>
                 <div>
                   <p className="text-xs font-bold text-neutral-500 uppercase">Submitted To</p>
-                  <p className="font-medium text-neutral-900">{viewingRecord.submittedTo === 'Other' ? viewingRecord.otherOffice : viewingRecord.submittedTo}</p>
+                  <p className="font-medium text-neutral-900">{viewingRecord.submittedTo}</p>
                 </div>
                 <div>
                   <p className="text-xs font-bold text-neutral-500 uppercase">Submitted By</p>

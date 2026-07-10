@@ -20,8 +20,7 @@ const DOCUMENT_TYPES = [
 
 const SUBMITTED_TO_OPTIONS = [
   'Dhenkanal HO',
-  'Division Office',
-  'Other'
+  'Division Office'
 ];
 
 const STATUS_OPTIONS = [
@@ -207,13 +206,6 @@ export function DocumentSubmissionForm() {
               {SUBMITTED_TO_OPTIONS.map(o => <option key={o} value={o}>{o}</option>)}
             </select>
           </div>
-
-          {formData.submittedTo === 'Other' && (
-            <div className="space-y-1.5">
-              <label className="text-sm font-bold text-neutral-700">Specify Office *</label>
-              <input required type="text" name="otherOffice" value={formData.otherOffice} onChange={handleChange} placeholder="Specify Office Name" className="w-full px-4 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl focus:ring-2 focus:ring-red-500 outline-none transition-all" />
-            </div>
-          )}
 
           <div className="space-y-1.5">
             <label className="text-sm font-bold text-neutral-700">Status</label>
