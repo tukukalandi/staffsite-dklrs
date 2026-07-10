@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
   UploadCloud,
   CheckCircle2,
@@ -7,6 +8,7 @@ import {
   FileText,
   Calendar,
   Building2,
+  ClipboardList
 } from "lucide-react";
 import {
   doc,
@@ -53,6 +55,7 @@ export function AdminPortal() {
   const [driveToken, setDriveToken] = useState<string | null>(null);
 
   const [userDocs, setUserDocs] = useState<any[]>([]);
+  const [submissionStats, setSubmissionStats] = useState({ total: 0, pending: 0, completed: 0, returned: 0 });
 
   useEffect(() => {
     return onAuthStateChanged(auth, (user) => {
@@ -63,21 +66,42 @@ export function AdminPortal() {
   useEffect(() => {
     if (!currentUser) {
       setUserDocs([]);
+      setSubmissionStats({ total: 0, pending: 0, completed: 0, returned: 0 });
       return;
     }
+    
+    // Fetch user docs
     const q = query(
       collection(db, "documents"),
       where("userId", "==", currentUser.uid),
       orderBy("uploadDate", "desc"),
     );
-    const unsubscribe = onSnapshot(q, (snapshot) => {
+    const unsubscribeDocs = onSnapshot(q, (snapshot) => {
       const docsData = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
       setUserDocs(docsData);
     });
-    return unsubscribe;
+    
+    // Fetch submission stats
+    const statsQ = query(collection(db, "documentSubmissionReport"));
+    const unsubscribeStats = onSnapshot(statsQ, (snapshot) => {
+      let total = 0, pending = 0, completed = 0, returned = 0;
+      snapshot.docs.forEach(doc => {
+        total++;
+        const status = doc.data().status;
+        if (status === 'Pending') pending++;
+        else if (status === 'Completed') completed++;
+        else if (status === 'Returned') returned++;
+      });
+      setSubmissionStats({ total, pending, completed, returned });
+    });
+
+    return () => {
+      unsubscribeDocs();
+      unsubscribeStats();
+    };
   }, [currentUser]);
 
   const handleLogin = async () => {
@@ -216,6 +240,42 @@ export function AdminPortal() {
 
   return (
     <div className="max-w-4xl mx-auto space-y-10">
+      {/* Document Submission Report Dashboard Card */}
+      <div className="bg-white rounded-[2rem] shadow-sm border border-neutral-200 overflow-hidden relative">
+        <div className="p-8 border-b border-neutral-100 bg-gradient-to-r from-neutral-50 to-white flex items-center justify-between">
+          <div>
+            <h3 className="text-2xl font-extrabold text-neutral-900 tracking-tight flex items-center">
+              <ClipboardList className="w-6 h-6 mr-3 text-red-600" />
+              Document Submission Report
+            </h3>
+            <p className="text-neutral-500 mt-2 font-medium">
+              Track physical documents sent to Head Office.
+            </p>
+          </div>
+          <Link to="/doc-report" className="px-5 py-2.5 bg-neutral-100 hover:bg-neutral-200 text-neutral-800 font-bold rounded-xl transition-colors border border-neutral-300">
+            View Report
+          </Link>
+        </div>
+        <div className="p-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="bg-blue-50 border border-blue-100 rounded-xl p-5 text-center">
+            <p className="text-xs font-bold text-blue-600 uppercase tracking-wider mb-1">Total</p>
+            <p className="text-3xl font-extrabold text-blue-900">{submissionStats.total}</p>
+          </div>
+          <div className="bg-orange-50 border border-orange-100 rounded-xl p-5 text-center">
+            <p className="text-xs font-bold text-orange-600 uppercase tracking-wider mb-1">Pending</p>
+            <p className="text-3xl font-extrabold text-orange-900">{submissionStats.pending}</p>
+          </div>
+          <div className="bg-green-50 border border-green-100 rounded-xl p-5 text-center">
+            <p className="text-xs font-bold text-green-600 uppercase tracking-wider mb-1">Completed</p>
+            <p className="text-3xl font-extrabold text-green-900">{submissionStats.completed}</p>
+          </div>
+          <div className="bg-purple-50 border border-purple-100 rounded-xl p-5 text-center">
+            <p className="text-xs font-bold text-purple-600 uppercase tracking-wider mb-1">Returned</p>
+            <p className="text-3xl font-extrabold text-purple-900">{submissionStats.returned}</p>
+          </div>
+        </div>
+      </div>
+
       {/* Staff Photos Management */}
       <StaffPhotosAdmin />
 

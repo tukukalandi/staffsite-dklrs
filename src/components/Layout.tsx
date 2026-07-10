@@ -25,6 +25,8 @@ const navigation = [
   { name: "Our Agents", href: "/agents", icon: UserSquare2 },
   { name: "Others", href: "/others", icon: FolderOpen },
   { name: "Admin Portal", href: "/admin", icon: ShieldAlert },
+  { name: "Submit Document", href: "/doc-submission", icon: FileText },
+  { name: "Document Report", href: "/doc-report", icon: FolderOpen },
 ];
 
 export function Layout() {

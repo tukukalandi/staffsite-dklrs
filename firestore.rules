@@ -46,5 +46,9 @@ service cloud.firestore {
       allow read: if true;
       allow write: if isSignedIn() && isValidStaffPhoto(incoming());
     }
+
+    match /documentSubmissionReport/{docId} {
+      allow read, create, update, delete: if isSignedIn();
+    }
   }
 }

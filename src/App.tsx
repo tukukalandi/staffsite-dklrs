@@ -10,6 +10,8 @@ import { OfficialCorrespondence } from './pages/OfficialCorrespondence';
 import { AdminPortal } from './pages/AdminPortal';
 import { GenericPage } from './pages/GenericPage';
 import { Agents } from './pages/Agents';
+import { DocumentSubmissionForm } from './pages/DocumentSubmissionForm';
+import { DocumentSubmissionReport } from './pages/DocumentSubmissionReport';
 
 export default function App() {
   return (
@@ -23,6 +25,8 @@ export default function App() {
           <Route path="agents" element={<Agents />} />
           <Route path="others" element={<GenericPage title="Others" description="Miscellaneous resources, guidelines, and additional staff links." />} />
           <Route path="admin" element={<AdminPortal />} />
+          <Route path="doc-submission" element={<DocumentSubmissionForm />} />
+          <Route path="doc-report" element={<DocumentSubmissionReport />} />
         </Route>
       </Routes>
     </BrowserRouter>
