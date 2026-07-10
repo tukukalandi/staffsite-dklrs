@@ -35,15 +35,15 @@ service cloud.firestore {
     }
 
     match /documents/{documentId} {
-      // allow all staff (any authenticated user) to read documents
-      allow read: if isSignedIn();
+      // allow anyone to read documents
+      allow read: if true;
       allow create: if isSignedIn() && isValidId(documentId) && isValidDocumentRecord(incoming());
       allow update: if false;
       allow delete: if isSignedIn() && existing().userId == request.auth.uid;
     }
 
     match /staffPhotos/{staffId} {
-      allow read: if isSignedIn();
+      allow read: if true;
       allow write: if isSignedIn() && isValidStaffPhoto(incoming());
     }
   }

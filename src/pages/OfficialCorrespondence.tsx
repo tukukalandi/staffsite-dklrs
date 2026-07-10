@@ -46,8 +46,6 @@ export function OfficialCorrespondence() {
   }, []);
 
   useEffect(() => {
-    if (!isAuthenticated) return;
-
     const q = query(collection(db, 'documents'), orderBy('uploadDate', 'desc'));
     
     setLoading(true);
@@ -61,7 +59,7 @@ export function OfficialCorrespondence() {
     });
 
     return () => unsubscribe();
-  }, [isAuthenticated]);
+  }, []);
 
   const branchDocs = selectedBranch 
     ? documents.filter(doc => doc.branch === selectedBranch)
@@ -71,17 +69,6 @@ export function OfficialCorrespondence() {
     doc.letterNo?.toLowerCase().includes(search.toLowerCase()) ||
     doc.description?.toLowerCase().includes(search.toLowerCase())
   );
-
-  if (!isAuthenticated) {
-    return (
-      <div className="bg-white border border-neutral-200 rounded-xl p-12 text-center shadow-sm">
-        <h3 className="text-lg font-medium text-neutral-900 mb-1">Authentication Required</h3>
-        <p className="text-neutral-500 max-w-sm mx-auto">
-          Please sign in using the Admin Portal to view official correspondence.
-        </p>
-      </div>
-    );
-  }
 
   if (!selectedBranch) {
     return (
