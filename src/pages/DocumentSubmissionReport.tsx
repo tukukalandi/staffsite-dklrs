@@ -251,9 +251,7 @@ export function DocumentSubmissionReport() {
         <select value={officeFilter} onChange={(e) => setOfficeFilter(e.target.value)} className="w-full px-4 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl focus:ring-2 focus:ring-red-500 outline-none text-sm">
           <option value="">All Offices</option>
           <option value="Dhenkanal HO">Dhenkanal HO</option>
-          <option value="Angul HO">Angul HO</option>
-          <option value="Talcher HO">Talcher HO</option>
-          <option value="Nalco Nagar MDG">Nalco Nagar MDG</option>
+          <option value="Division Office">Division Office</option>
           <option value="Other">Other</option>
         </select>
       </div>

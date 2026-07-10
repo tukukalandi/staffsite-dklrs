@@ -20,9 +20,7 @@ const DOCUMENT_TYPES = [
 
 const SUBMITTED_TO_OPTIONS = [
   'Dhenkanal HO',
-  'Angul HO',
-  'Talcher HO',
-  'Nalco Nagar MDG',
+  'Division Office',
   'Other'
 ];
 
