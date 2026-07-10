@@ -64,14 +64,14 @@ export function StaffPhotosAdmin() {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-neutral-200 overflow-hidden">
-      <div className="p-6 border-b border-neutral-200 bg-neutral-50 flex items-center justify-between">
+    <div className="bg-white rounded-[2rem] shadow-xl border border-neutral-100 overflow-hidden">
+      <div className="p-8 border-b border-neutral-100 bg-gradient-to-r from-red-50 to-white flex items-center justify-between">
         <div>
-          <h3 className="text-lg font-semibold text-neutral-900">Manage Staff Photos</h3>
-          <p className="text-sm text-neutral-500 mt-1">Upload profile pictures to be displayed on the Home page.</p>
+          <h3 className="text-2xl font-extrabold text-neutral-900 tracking-tight">Staff Photos</h3>
+          <p className="text-neutral-500 mt-2 font-medium">Manage profile pictures displayed on the Home page.</p>
         </div>
       </div>
-      <div className="p-6">
+      <div className="p-8">
         <input 
           type="file" 
           accept="image/*" 
@@ -79,35 +79,37 @@ export function StaffPhotosAdmin() {
           ref={fileInputRef} 
           onChange={handleFileChange} 
         />
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {STAFF_LIST.map((staff) => (
-            <div key={staff.id} className="flex items-center space-x-4 p-4 border border-neutral-200 rounded-lg">
+            <div key={staff.id} className="flex items-center space-x-6 p-6 border-2 border-neutral-100 hover:border-red-200 hover:shadow-md transition-all rounded-2xl group bg-neutral-50">
               <div className="flex-shrink-0 relative">
-                {photos[staff.id] ? (
-                  <img src={photos[staff.id]} alt={staff.name} className="w-16 h-16 rounded-full object-cover border border-neutral-200" />
-                ) : (
-                  <UserCircle className="w-16 h-16 text-neutral-300" />
-                )}
+                <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-white shadow-sm bg-white flex items-center justify-center">
+                  {photos[staff.id] ? (
+                    <img src={photos[staff.id]} alt={staff.name} className="w-full h-full object-cover transition-transform group-hover:scale-110 duration-300" />
+                  ) : (
+                    <UserCircle className="w-full h-full p-2 text-neutral-300" />
+                  )}
+                </div>
                 {loadingStaffId === staff.id && (
-                  <div className="absolute inset-0 bg-white/60 rounded-full flex items-center justify-center">
-                    <Loader2 className="w-6 h-6 text-red-600 animate-spin" />
+                  <div className="absolute inset-0 bg-white/70 rounded-full flex items-center justify-center backdrop-blur-sm shadow-inner mt-1 ml-1 w-20 h-20">
+                    <Loader2 className="w-8 h-8 text-red-600 animate-spin" />
                   </div>
                 )}
                 {successStaffId === staff.id && (
-                  <div className="absolute -bottom-1 -right-1 bg-green-50 rounded-full">
-                    <CheckCircle2 className="w-6 h-6 text-green-600" />
+                  <div className="absolute -bottom-1 -right-1 bg-green-100 rounded-full p-1 shadow-sm border border-white">
+                    <CheckCircle2 className="w-5 h-5 text-green-600" />
                   </div>
                 )}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-neutral-900 truncate">{staff.name}</p>
-                <p className="text-xs text-neutral-500">{staff.title}</p>
+                <p className="text-lg font-bold text-neutral-900 truncate group-hover:text-red-700 transition-colors">{staff.name}</p>
+                <p className="text-sm text-neutral-500 font-medium">{staff.title}</p>
               </div>
               <div>
                 <button
                   onClick={() => triggerFileSelect(staff.id)}
                   disabled={loadingStaffId !== null}
-                  className="p-2 text-sm text-neutral-600 hover:text-red-600 hover:bg-neutral-100 rounded-md transition-colors disabled:opacity-50"
+                  className="bg-white border text-red-600 hover:bg-red-600 hover:text-white border-red-200 shadow-sm p-3 rounded-full transition-colors disabled:opacity-50 hover:shadow-red-600/30 font-semibold"
                   title="Upload Photo"
                 >
                   <Upload className="w-5 h-5" />
