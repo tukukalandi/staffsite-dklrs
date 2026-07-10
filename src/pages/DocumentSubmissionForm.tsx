@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { collection, addDoc, doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, User } from 'firebase/auth';
 import { db, auth, googleProvider } from '../lib/firebase';
-import { ShieldAlert, CheckCircle2 } from 'lucide-react';
+import { ShieldAlert, CheckCircle2, X } from 'lucide-react';
 
 const DOCUMENT_TYPES = [
   'Duplicate Passbook',
@@ -156,14 +156,20 @@ export function DocumentSubmissionForm() {
         <p className="text-neutral-500 mt-2 font-medium">Record physical documents sent to Head Office.</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="p-8 space-y-6">
-        {success && (
-          <div className="bg-green-50 text-green-700 p-4 rounded-xl flex items-center border border-green-200 shadow-sm">
-            <CheckCircle2 className="h-5 w-5 mr-3 flex-shrink-0" />
-            <p className="text-sm font-bold">Record saved successfully.</p>
+      {success && (
+        <div className="fixed bottom-4 right-4 md:bottom-8 md:right-8 bg-green-50 border border-green-200 shadow-xl rounded-xl p-4 flex items-start z-50 animate-bounce-short">
+          <CheckCircle2 className="h-6 w-6 text-green-600 mr-3 flex-shrink-0" />
+          <div className="mr-6">
+            <h4 className="text-sm font-bold text-green-900">Document Submitted</h4>
+            <p className="text-sm text-green-700 mt-0.5">Your record has been saved successfully.</p>
           </div>
-        )}
-        
+          <button onClick={() => setSuccess(false)} className="text-green-500 hover:text-green-700 transition-colors ml-auto -mt-1 -mr-1 p-1">
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit} className="p-8 space-y-6">
         {error && (
           <div className="bg-red-50 text-red-700 p-4 rounded-xl text-sm font-bold border border-red-200 shadow-sm">
             {error}
