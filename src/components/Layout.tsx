@@ -94,15 +94,6 @@ export function Layout() {
             />
           </div>
 
-          {/* Swachh Bharat representation */}
-          <div className="hidden lg:flex items-center justify-center mr-4 opacity-90 hover:opacity-100 transition-opacity">
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Swachh_Bharat_Abhiyan_logo.svg/256px-Swachh_Bharat_Abhiyan_logo.svg.png"
-              alt="Swachh Bharat"
-              className="h-10 object-contain"
-            />
-          </div>
-
           {user ? (
             <div className="flex items-center gap-2 sm:gap-3">
               <div className="hidden sm:flex flex-col items-end">

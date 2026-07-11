@@ -122,16 +122,12 @@ export function Home() {
             </div>
           </div>
 
-          <div className="hidden lg:block relative w-64 h-64 md:w-80 md:h-80 xl:w-96 xl:h-96 shrink-0">
+          <div className="hidden lg:block relative w-64 h-64 md:w-80 md:h-80 xl:w-96 xl:h-96 shrink-0 flex items-center justify-center">
             <div className="absolute inset-0 bg-white/10 backdrop-blur-3xl rounded-full animate-pulse blur-3xl opacity-50"></div>
             <img
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/India_Post_Logo.svg/512px-India_Post_Logo.svg.png"
+              src="https://upload.wikimedia.org/wikipedia/en/3/32/India_Post.svg"
               alt="India Post Logo Large"
-              className="w-full h-full object-contain relative z-10 drop-shadow-2xl brightness-0 invert"
-              style={{
-                filter:
-                  "brightness(0) invert(1) drop-shadow(0 20px 30px rgba(0,0,0,0.3))",
-              }}
+              className="w-full h-full object-contain relative z-10 drop-shadow-2xl"
             />
           </div>
         </div>

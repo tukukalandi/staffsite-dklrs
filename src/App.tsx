@@ -10,6 +10,7 @@ import { OfficialCorrespondence } from './pages/OfficialCorrespondence';
 import { AdminPortal } from './pages/AdminPortal';
 import { GenericPage } from './pages/GenericPage';
 import { Agents } from './pages/Agents';
+import { BranchOffices } from './pages/BranchOffices';
 import { DocumentSubmissionForm } from './pages/DocumentSubmissionForm';
 import { DocumentSubmissionReport } from './pages/DocumentSubmissionReport';
 
@@ -20,7 +21,7 @@ export default function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="correspondence" element={<OfficialCorrespondence />} />
-          <Route path="branches" element={<GenericPage title="Branch Offices" description="Directory and details of all branch offices connected to Dhenkanal RS SO." />} />
+          <Route path="branches" element={<BranchOffices />} />
           <Route path="customers" element={<GenericPage title="Our Customers" description="Customer database, analytics, and contact information management." />} />
           <Route path="agents" element={<Agents />} />
           <Route path="others" element={<GenericPage title="Others" description="Miscellaneous resources, guidelines, and additional staff links." />} />
