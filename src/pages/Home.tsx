@@ -70,50 +70,50 @@ export function Home() {
           <Mail className="w-64 h-64 md:w-[400px] md:h-[400px] transform rotate-12" />
         </div>
 
-        <div className="relative z-10 p-8 sm:p-12 lg:p-16 flex flex-col md:flex-row items-center justify-between gap-8">
+        <div className="relative z-10 p-6 sm:p-12 lg:p-16 flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8">
           <div className="max-w-2xl">
-            <div className="inline-flex items-center space-x-2 bg-yellow-400/90 text-red-900 px-4 py-1.5 rounded-full text-sm font-bold mb-6 shadow-sm">
+            <div className="inline-flex items-center space-x-2 bg-yellow-400/90 text-red-900 px-4 py-1.5 rounded-full text-sm font-bold mb-4 sm:mb-6 shadow-sm">
               <MapPin className="w-4 h-4" />
               <span className="uppercase tracking-wider">
                 Dhenkanal, Odisha 759013
               </span>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold mb-6 tracking-tight text-white drop-shadow-sm leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold mb-4 sm:mb-6 tracking-tight text-white drop-shadow-sm leading-tight">
               India Post <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-amber-400 drop-shadow-none">
                 Dhenkanal RS SO
               </span>
             </h1>
-            <p className="text-lg md:text-xl text-red-50 leading-relaxed max-w-2xl mb-10 font-medium">
+            <p className="text-base sm:text-lg md:text-xl text-red-50 leading-relaxed max-w-2xl mb-6 sm:mb-10 font-medium">
               Dak Sewa Jan Sewa. Providing reliable, efficient, and accessible
               postal, financial, and insurance services to our community.
             </p>
             <div className="flex flex-wrap gap-4">
-              <div className="bg-black/10 hover:bg-black/20 transition-colors backdrop-blur-md rounded-2xl p-5 flex items-center border border-white/10 shadow-lg">
-                <div className="flex items-center space-x-4">
-                  <div className="bg-yellow-400 text-red-700 p-3 rounded-xl shadow-inner">
-                    <Phone className="w-6 h-6" />
+              <div className="bg-black/10 hover:bg-black/20 transition-colors backdrop-blur-md rounded-2xl p-4 sm:p-5 flex items-center border border-white/10 shadow-lg">
+                <div className="flex items-center space-x-3 sm:space-x-4">
+                  <div className="bg-yellow-400 text-red-700 p-2 sm:p-3 rounded-xl shadow-inner">
+                    <Phone className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
                   <div>
-                    <p className="text-xs text-red-200 uppercase tracking-widest font-bold mb-1">
+                    <p className="text-[10px] sm:text-xs text-red-200 uppercase tracking-widest font-bold mb-1">
                       National Helpline
                     </p>
-                    <p className="font-extrabold text-white text-xl">
+                    <p className="font-extrabold text-white text-lg sm:text-xl">
                       1800 266 6868
                     </p>
                   </div>
                 </div>
               </div>
-              <div className="bg-black/10 hover:bg-black/20 transition-colors backdrop-blur-md rounded-2xl p-5 flex items-center border border-white/10 shadow-lg">
-                <div className="flex items-center space-x-4">
-                  <div className="bg-white text-red-600 p-3 rounded-xl shadow-inner">
-                    <Award className="w-6 h-6" />
+              <div className="bg-black/10 hover:bg-black/20 transition-colors backdrop-blur-md rounded-2xl p-4 sm:p-5 flex items-center border border-white/10 shadow-lg">
+                <div className="flex items-center space-x-3 sm:space-x-4">
+                  <div className="bg-white text-red-600 p-2 sm:p-3 rounded-xl shadow-inner">
+                    <Award className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
                   <div>
-                    <p className="text-xs text-red-200 uppercase tracking-widest font-bold mb-1">
+                    <p className="text-[10px] sm:text-xs text-red-200 uppercase tracking-widest font-bold mb-1">
                       Service Excellence
                     </p>
-                    <p className="font-extrabold text-white text-xl">
+                    <p className="font-extrabold text-white text-lg sm:text-xl">
                       Dak Karmayogi
                     </p>
                   </div>
@@ -122,12 +122,11 @@ export function Home() {
             </div>
           </div>
 
-          <div className="hidden lg:block relative w-64 h-64 md:w-80 md:h-80 xl:w-96 xl:h-96 shrink-0 flex items-center justify-center">
-            <div className="absolute inset-0 bg-white/10 backdrop-blur-3xl rounded-full animate-pulse blur-3xl opacity-50"></div>
+          <div className="hidden lg:flex relative w-64 h-64 md:w-80 md:h-80 xl:w-96 xl:h-96 shrink-0 items-center justify-center bg-white rounded-full p-8 shadow-2xl">
             <img
               src="https://upload.wikimedia.org/wikipedia/en/3/32/India_Post.svg"
               alt="India Post Logo Large"
-              className="w-full h-full object-contain relative z-10 drop-shadow-2xl"
+              className="w-full h-full object-contain relative z-10"
             />
           </div>
         </div>

@@ -185,9 +185,8 @@ export function BranchOffices() {
             <Building2 className="h-8 w-8 text-red-600" />
             Branch Offices
           </h1>
-          <p className="text-neutral-500 mt-2 font-medium flex flex-wrap items-center gap-2">
+          <p className="text-neutral-500 mt-2 font-medium">
             Directory and contact details of all connected branch offices.
-            <span className="text-xs bg-neutral-100 text-neutral-600 px-2 py-0.5 rounded font-bold border border-neutral-200">Data Sheet Access - User ID: 10166284 | Pass: Dop@1234</span>
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">

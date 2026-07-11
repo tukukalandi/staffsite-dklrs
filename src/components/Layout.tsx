@@ -12,6 +12,10 @@ import {
   Menu,
   X,
   Home as HomeIcon,
+  Moon,
+  Sun,
+  Clock,
+  CalendarDays
 } from "lucide-react";
 import { onAuthStateChanged, signOut, User } from "firebase/auth";
 import { auth } from "../lib/firebase";
@@ -33,6 +37,25 @@ export function Layout() {
   const location = useLocation();
   const [user, setUser] = useState<User | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    if (newTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  };
 
   useEffect(() => {
     setIsMobileMenuOpen(false);
@@ -48,14 +71,21 @@ export function Layout() {
 
   return (
     <div className="flex flex-col h-screen bg-neutral-50 overflow-hidden font-sans">
-      {/* Top Gov Bar */}
-      <div className="bg-neutral-800 text-white text-[11px] sm:text-xs py-1.5 px-4 flex justify-between items-center shrink-0 z-20">
-        <div className="font-medium tracking-wide">
-          GOVERNMENT OF INDIA{" "}
-          <span className="hidden sm:inline">| DEPARTMENT OF POSTS</span>
+      {/* Top Info Bar */}
+      <div className="bg-neutral-800 text-neutral-300 text-[11px] sm:text-xs py-1.5 px-4 flex justify-between items-center shrink-0 z-20">
+        <div className="font-medium tracking-wide flex items-center gap-4">
+          <span className="flex items-center gap-1.5"><CalendarDays className="w-3.5 h-3.5"/> {currentTime.toLocaleDateString('en-US', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' })}</span>
+          <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5"/> {currentTime.toLocaleTimeString()}</span>
         </div>
-        <div className="font-medium tracking-wide">
-          MINISTRY OF COMMUNICATIONS
+        <div className="flex items-center">
+          <button 
+            onClick={toggleTheme}
+            className="flex items-center gap-1.5 hover:text-white transition-colors p-1 rounded hover:bg-neutral-700 font-medium"
+            title="Toggle Theme"
+          >
+            {theme === 'light' ? <Moon className="w-3.5 h-3.5" /> : <Sun className="w-3.5 h-3.5" />}
+            <span className="hidden sm:inline">{theme === 'light' ? 'Dark Mode' : 'Light Mode'}</span>
+          </button>
         </div>
       </div>
 
