@@ -37,12 +37,6 @@ export function DocumentSubmissionReport() {
   }, []);
 
   useEffect(() => {
-    if (!currentUser) {
-      setRecords([]);
-      setLoading(false);
-      return;
-    }
-    
     setLoading(true);
     setFetchError(null);
     const q = query(collection(db, 'documentSubmissionReport'));
@@ -204,17 +198,6 @@ export function DocumentSubmissionReport() {
     window.print();
   };
 
-  if (!currentUser) {
-    return (
-      <div className="max-w-2xl mx-auto bg-white rounded-[2rem] shadow-sm border border-neutral-200 overflow-hidden text-center p-12">
-        <ShieldAlert className="h-12 w-12 text-red-600 mx-auto mb-4" />
-        <h3 className="text-xl font-semibold text-neutral-900 mb-2">Staff Authentication Required</h3>
-        <p className="text-neutral-500 mb-6">Please sign in to view reports.</p>
-        <button onClick={handleLogin} className="px-6 py-2 bg-red-600 text-white font-medium rounded-md shadow-sm hover:bg-red-700 transition">Sign in</button>
-      </div>
-    );
-  }
-
   return (
     <div className="max-w-7xl mx-auto space-y-6">
       
@@ -317,12 +300,16 @@ export function DocumentSubmissionReport() {
                         <button onClick={() => setViewingRecord(r)} className="p-1.5 text-neutral-600 hover:bg-neutral-100 rounded-lg transition-colors" title="View">
                           <Eye className="w-4 h-4" />
                         </button>
-                        <button onClick={() => setEditingRecord(r)} className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="Edit">
-                          <Edit className="w-4 h-4" />
-                        </button>
-                        <button onClick={() => r.id && handleDelete(r.id)} className="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Delete">
-                          <Trash2 className="w-4 h-4" />
-                        </button>
+                        {currentUser?.email === 'tukukalandi@gmail.com' && (
+                          <>
+                            <button onClick={() => setEditingRecord(r)} className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="Edit">
+                              <Edit className="w-4 h-4" />
+                            </button>
+                            <button onClick={() => r.id && handleDelete(r.id)} className="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Delete">
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </>
+                        )}
                       </div>
                     </td>
                   </tr>

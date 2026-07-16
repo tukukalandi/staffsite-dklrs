@@ -137,6 +137,16 @@ export function DocumentSubmissionForm() {
     }
   };
 
+  if (currentUser && currentUser.email !== 'tukukalandi@gmail.com') {
+    return (
+      <div className="max-w-2xl mx-auto bg-white rounded-[2rem] shadow-sm border border-neutral-200 overflow-hidden text-center p-12">
+        <ShieldAlert className="h-12 w-12 text-red-600 mx-auto mb-4" />
+        <h3 className="text-xl font-semibold text-neutral-900 mb-2">Access Denied</h3>
+        <p className="text-neutral-500 mb-6">You do not have permission to access the Document Submission Form.</p>
+      </div>
+    );
+  }
+
   if (!currentUser) {
     return (
       <div className="max-w-2xl mx-auto bg-white rounded-[2rem] shadow-sm border border-neutral-200 overflow-hidden text-center p-12">

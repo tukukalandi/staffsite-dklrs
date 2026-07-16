@@ -11,6 +11,8 @@ import { AdminPortal } from './pages/AdminPortal';
 import { GenericPage } from './pages/GenericPage';
 import { Agents } from './pages/Agents';
 import { BranchOffices } from './pages/BranchOffices';
+import { Others } from './pages/Others';
+import { OurCustomers } from './pages/OurCustomers';
 import { DocumentSubmissionForm } from './pages/DocumentSubmissionForm';
 import { DocumentSubmissionReport } from './pages/DocumentSubmissionReport';
 
@@ -22,9 +24,9 @@ export default function App() {
           <Route index element={<Home />} />
           <Route path="correspondence" element={<OfficialCorrespondence />} />
           <Route path="branches" element={<BranchOffices />} />
-          <Route path="customers" element={<GenericPage title="Our Customers" description="Customer database, analytics, and contact information management." />} />
+          <Route path="customers" element={<OurCustomers />} />
           <Route path="agents" element={<Agents />} />
-          <Route path="others" element={<GenericPage title="Others" description="Miscellaneous resources, guidelines, and additional staff links." />} />
+          <Route path="others" element={<Others />} />
           <Route path="admin" element={<AdminPortal />} />
           <Route path="doc-submission" element={<DocumentSubmissionForm />} />
           <Route path="doc-report" element={<DocumentSubmissionReport />} />

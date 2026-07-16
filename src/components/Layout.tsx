@@ -265,6 +265,10 @@ export function Layout() {
           <div className="p-4 sm:p-6 lg:p-8 flex-1 w-full max-w-7xl mx-auto">
             <Outlet />
           </div>
+          
+          <footer className="w-full py-4 px-6 text-center text-xs font-medium text-neutral-500 border-t border-neutral-200/60 bg-white/50 backdrop-blur-sm mt-auto">
+            Prepared by Kalandi Charan Sahoo, PA, Dhenkanal RS SO.
+          </footer>
         </main>
       </div>
     </div>

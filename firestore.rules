@@ -48,7 +48,12 @@ service cloud.firestore {
     }
 
     match /documentSubmissionReport/{docId} {
-      allow read, create, update, delete: if isSignedIn();
+      allow read: if true;
+      allow create, update, delete: if isSignedIn();
+    }
+    match /customers/{customerId} {
+      allow read: if true;
+      allow write: if isSignedIn();
     }
   }
 }
